@@ -21,7 +21,7 @@ namespace vk {
 namespace camera_loader {
 
 /// Load from ROS Namespace
-bool loadFromRosNs(const std::string& ns, vk::AbstractCamera*& cam)
+bool loadFromRosNs(const std::string& ns, vk::AbstractCamera*& cam, int& raw_width, int& raw_height, double& raw_fx, double& raw_fy, double &raw_cx, double &raw_cy, double &k1, double &k2, double &p1, double &p2)
 {
   bool res = true;
   std::string cam_model(getParam<std::string>(ns+"/cam_model"));
@@ -43,6 +43,17 @@ bool loadFromRosNs(const std::string& ns, vk::AbstractCamera*& cam)
         getParam<double>(ns+"/cam_d1", 0.0),
         getParam<double>(ns+"/cam_d2", 0.0),
         getParam<double>(ns+"/cam_d3", 0.0));
+
+    raw_width = getParam<int>(ns+"/cam_width");
+    raw_height = getParam<int>(ns+"/cam_height");
+    raw_fx = getParam<double>(ns+"/cam_fx");
+    raw_fy = getParam<double>(ns+"/cam_fy");
+    raw_cx = getParam<double>(ns+"/cam_cx");
+    raw_cy = getParam<double>(ns+"/cam_cy");
+    k1 = getParam<double>(ns+"/cam_d0", 0.0);
+    k2 = getParam<double>(ns+"/cam_d1", 0.0);
+    p1 = getParam<double>(ns+"/cam_d2", 0.0);
+    p2 = getParam<double>(ns+"/cam_d3", 0.0);
   }
   else if(cam_model == "EquidistantCamera")
   {
@@ -58,6 +69,17 @@ bool loadFromRosNs(const std::string& ns, vk::AbstractCamera*& cam)
         getParam<double>(ns+"/k2", 0.0),
         getParam<double>(ns+"/k3", 0.0),
         getParam<double>(ns+"/k4", 0.0));
+
+    raw_width = getParam<int>(ns+"/cam_width");
+    raw_height = getParam<int>(ns+"/cam_height");
+    raw_fx = getParam<double>(ns+"/cam_fx");
+    raw_fy = getParam<double>(ns+"/cam_fy");
+    raw_cx = getParam<double>(ns+"/cam_cx");
+    raw_cy = getParam<double>(ns+"/cam_cy");
+    k1 = getParam<double>(ns+"/k1", 0.0);
+    k2 = getParam<double>(ns+"/k2", 0.0);
+    p1 = getParam<double>(ns+"/k3", 0.0);
+    p2 = getParam<double>(ns+"/k4", 0.0);
   }
   else if(cam_model == "PolynomialCamera")
   {
