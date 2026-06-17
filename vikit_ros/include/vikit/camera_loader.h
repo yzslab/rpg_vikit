@@ -21,10 +21,11 @@ namespace vk {
 namespace camera_loader {
 
 /// Load from ROS Namespace
-bool loadFromRosNs(const std::string& ns, vk::AbstractCamera*& cam, int& raw_width, int& raw_height, double& raw_fx, double& raw_fy, double &raw_cx, double &raw_cy, double &k1, double &k2, double &p1, double &p2)
+bool loadFromRosNs(const std::string& ns, vk::AbstractCamera*& cam, std::string& out_cam_model, int& raw_width, int& raw_height, double& raw_fx, double& raw_fy, double &raw_cx, double &raw_cy, double &k1, double &k2, double &p1, double &p2)
 {
   bool res = true;
   std::string cam_model(getParam<std::string>(ns+"/cam_model"));
+  out_cam_model = cam_model;
   if(cam_model == "Ocam")
   {
     cam = new vk::OmniCamera(getParam<std::string>(ns+"/cam_calib_file", ""));
